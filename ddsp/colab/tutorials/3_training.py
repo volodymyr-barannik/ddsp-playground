@@ -51,7 +51,7 @@ import time
 import ddsp
 from ddsp.training import (data, decoders, encoders, models, preprocessing, 
                            train_util, trainers)
-#from ddsp.colab.colab_utils import play, specplot, DEFAULT_SAMPLE_RATE
+from ddsp.colab.colab_utils import play, specplot, DEFAULT_SAMPLE_RATE
 from ddsp.colab.tutorials.playspectrohelp import play
 
 import matplotlib.pyplot as plt
@@ -66,11 +66,21 @@ sample_rate = DEFAULT_SAMPLE_RATE  # 16000
 
 # Get a single example from NSynth.
 # Takes a few seconds to load from GCS.
-#data_provider = data.NSynthTfds(split='test')
-with open('data_provider', 'rb') as data_provider_file:
-    data_provider = pickle.load(data_provider_file)
+# <MapDataset element_spec=
+# { 'audio': TensorSpec(shape=(64000,), dtype=tf.float32, name=None),
+#   'f0_hz': TensorSpec(shape=(1000,), dtype=tf.float32, name=None),
+#   'f0_confidence': TensorSpec(shape=(1000,), dtype=tf.float32, name=None),
+#   'loudness_db': TensorSpec(shape=(1000,), dtype=tf.float32, name=None),
+#   'pitch': TensorSpec(shape=(), dtype=tf.int64, name=None),
+#   'instrument_source': TensorSpec(shape=(), dtype=tf.int64, name=None),
+#   'instrument_family': TensorSpec(shape=(), dtype=tf.int64, name=None),
+#   'instrument': TensorSpec(shape=(), dtype=tf.int64, name=None)}>
 
-dataset = data_provider.get_batch(batch_size=1, shuffle=False).take(1).repeat()
+#data_provider = data.NSynthTfds(split='test')
+with open('dataset', 'rb') as dataset_file:
+    dataset = pickle.load(dataset_file)
+
+dataset = dataset.get_batch_from_cached_dataset(cached_dataset=dataset, batch_size=1, shuffle=False).take(1).repeat()
 batch = next(iter(dataset))
 audio = batch['audio']
 n_samples = audio.shape[1]
@@ -132,6 +142,7 @@ with strategy.scope():
                              processor_group=processor_group,
                              losses=[spectral_loss])
   trainer = trainers.Trainer(model, strategy, learning_rate=1e-3)
+  print(tf.keras.Model.summary(model, expand_nested=True))
 
 """# Train
 
