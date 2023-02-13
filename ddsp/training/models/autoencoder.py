@@ -55,6 +55,7 @@ class Autoencoder(Model):
 
     def call(self, features, training=True):
         """Run the core of the network, get predictions and loss."""
+        print(features)
         print(type(features))
         features = self.encode(features, training=training)
         features.update(self.decoder(features, training=training))
