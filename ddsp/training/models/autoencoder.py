@@ -36,6 +36,8 @@ class Autoencoder(Model):
         self.processor_group = processor_group
         self.loss_objs = ddsp.core.make_iterable(losses)
 
+        print("created autoencoder")
+
     def encode(self, features, training=True):
         """Get conditioning by preprocessing then encoding."""
         if self.preprocessor is not None:
