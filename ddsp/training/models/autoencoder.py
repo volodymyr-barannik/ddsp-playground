@@ -74,3 +74,15 @@ class Autoencoder(Model):
                 self.loss_objs, features['audio'], outputs['audio_synth'])
 
         return outputs
+
+
+class Autoencoder2(Autoencoder):
+    def __init__(self,
+                 preprocessor=None,  # f0, l
+                 encoder=None,  # z (optional)
+                 decoder=None,  # (f0, l, z) --> synth_params
+                 processor_group=None,  # synth_params --> audio
+                 losses=None,  # [spectral_loss]
+                 **kwargs):
+        print("creating Autoencoder2")
+        super().__init__(preprocessor=preprocessor, encoder=encoder, decoder=decoder, processor_group=processor_group, losses=losses, **kwargs)
