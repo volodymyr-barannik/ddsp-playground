@@ -1,5 +1,6 @@
 import numpy as np
-from IPython import display
+from IPython.display import Audio
+from IPython.core.display import display
 
 import ddsp
 
@@ -37,4 +38,4 @@ def play(array_of_floats,
     array_of_ints = np.array(
         np.asarray(array_of_floats) * normalizer, dtype=np.int16)
 
-    display.Audio(data=array_of_ints, rate=sample_rate, autoplay=autoplay)
+    display(Audio(data=array_of_ints, rate=sample_rate, autoplay=autoplay))
