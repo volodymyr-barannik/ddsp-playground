@@ -3,6 +3,12 @@ from IPython import display
 
 import ddsp
 
+
+# Alias these for backwards compatibility and ease.
+specplot = ddsp.training.plotting.specplot
+plot_impulse_responses = ddsp.training.plotting.plot_impulse_responses
+transfer_function = ddsp.training.plotting.transfer_function
+
 DEFAULT_SAMPLE_RATE = ddsp.spectral_ops.CREPE_SAMPLE_RATE
 
 
