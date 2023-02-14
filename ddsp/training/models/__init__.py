@@ -30,7 +30,7 @@ _configurable = lambda cls: gin.configurable(cls, module=__name__)
 #MidiAutoencoder = _configurable(MidiAutoencoder)
 #ZMidiAutoencoder = _configurable(ZMidiAutoencoder)
 
-
+TestVariable = "heyhey"
 
 @gin.configurable
 def get_model(model=gin.REQUIRED):
