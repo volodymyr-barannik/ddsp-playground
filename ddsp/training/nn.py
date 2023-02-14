@@ -33,7 +33,7 @@ tfkl = tfk.layers
 # pylint: disable=redundant-keyword-arg
 
 
-class DictLayer(tfkl.Model):
+class DictLayer(tfkl.Layer):
   """Wrap a Keras Layer to take dictionary inputs and outputs.
 
   Note that all return values will be converted to a dictionary, even if
