@@ -35,10 +35,11 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
                layers_per_stack=3,
                input_keys=('ld_scaled', 'f0_scaled', 'z'),
                output_splits=(('amps', 1), ('harmonic_distribution', 40)),
+               sparse_layers=False,
                **kwargs):
     super().__init__(
         input_keys=input_keys, output_splits=output_splits, **kwargs)
-    stack = lambda: nn.FcStack(ch, layers_per_stack)
+    stack = lambda: nn.FcStack(ch, layers_per_stack, sparse_layers=sparse_layers)
 
     # Layers.
     self.input_stacks = [stack() for k in self.input_keys]

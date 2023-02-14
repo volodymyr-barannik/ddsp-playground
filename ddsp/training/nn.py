@@ -23,6 +23,7 @@ import gin
 import tensorflow as tf
 import tensorflow_addons as tfa
 import tensorflow_probability as tfp
+from sparse.core import sparse
 
 tfk = tf.keras
 tfkl = tfk.layers
@@ -831,9 +832,9 @@ class ResNet(tfkl.Layer):
 class Fc(tf.keras.Sequential):
   """Makes a Dense -> LayerNorm -> Leaky ReLU layer."""
 
-  def __init__(self, ch=128, nonlinearity='leaky_relu', **kwargs):
+  def __init__(self, ch=128, nonlinearity='leaky_relu', sparse_layers=False, **kwargs):
     layers = [
-        tfkl.Dense(ch),
+        tfkl.Dense(ch) if sparse_layers else sparse(units=ch, density=0.3, activation=None),
         tfkl.LayerNormalization(),
         tfkl.Activation(get_nonlinearity(nonlinearity)),
     ]
@@ -844,8 +845,8 @@ class Fc(tf.keras.Sequential):
 class FcStack(tf.keras.Sequential):
   """Stack Dense -> LayerNorm -> Leaky ReLU layers."""
 
-  def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', **kwargs):
-    layers = [Fc(ch, nonlinearity) for i in range(layers)]
+  def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', sparse_layers=False, **kwargs):
+    layers = [Fc(ch, nonlinearity=nonlinearity, sparse_layers=sparse_layers) for i in range(layers)]
     super().__init__(layers, **kwargs)
 
 
