@@ -24,10 +24,10 @@ import gin
 
 _configurable = lambda cls: gin.configurable(cls, module=__name__)
 
-Autoencoder = _configurable(Autoencoder)
-InverseSynthesis = _configurable(InverseSynthesis)
-MidiAutoencoder = _configurable(MidiAutoencoder)
-ZMidiAutoencoder = _configurable(ZMidiAutoencoder)
+#Autoencoder = _configurable(Autoencoder)
+#InverseSynthesis = _configurable(InverseSynthesis)
+#MidiAutoencoder = _configurable(MidiAutoencoder)
+#ZMidiAutoencoder = _configurable(ZMidiAutoencoder)
 
 
 
