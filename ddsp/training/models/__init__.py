@@ -16,6 +16,7 @@
 """Module with all the global configurable models for training."""
 
 from ddsp.training.models.autoencoder import Autoencoder
+from ddsp.training.models.autoencoder import Autoencoder2
 from ddsp.training.models.inverse_synthesis import InverseSynthesis
 from ddsp.training.models.midi_autoencoder import MidiAutoencoder
 from ddsp.training.models.midi_autoencoder import ZMidiAutoencoder
