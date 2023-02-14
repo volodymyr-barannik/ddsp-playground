@@ -75,7 +75,11 @@ class DataProvider(object):
     Returns:
       A batched tf.data.Dataset.
     """
-        return self.get_batch_from_cached_dataset(self.get_dataset(shuffle))
+        return self.get_batch_from_cached_dataset(self.get_dataset(shuffle),
+                                                  batch_size=batch_size,
+                                                  shuffle=shuffle,
+                                                  repeats=repeats,
+                                                  drop_remainder=drop_remainder)
 
 
 class TfdsProvider(DataProvider):
