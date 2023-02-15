@@ -833,13 +833,13 @@ class SqueezeLayer(tfkl.Layer):
         super().__init__(**kwargs)
         self.axis = axis
 
-    def __call__(self, input, **kwargs):
+    def __call__(self, input):
         return tf.squeeze(input, axis=self.axis)
 
 
 class ExpandDimsLayer(tfkl.Layer):
 
-    def __init__(self, axis):
+    def __init__(self, axis, **kwargs):
         super().__init__(**kwargs)
         self.axis = axis
 
