@@ -23,7 +23,7 @@ import gin
 import tensorflow as tf
 import tensorflow_addons as tfa
 import tensorflow_probability as tfp
-from sparse.core import sparse
+from sparsenet.core import sparse
 
 tfk = tf.keras
 tfkl = tfk.layers
