@@ -41,14 +41,18 @@ class Autoencoder(Model):
     def encode(self, features, training=True):
         """Get conditioning by preprocessing then encoding."""
         if self.preprocessor is not None:
+            print(f"debug: encode: before preprocessor: features.shape={features.shape}")
             features.update(self.preprocessor(features, training=training))
+            print(f"debug: encode: after preprocessor: features.shape={features.shape}")
         if self.encoder is not None:
             features.update(self.encoder(features))
         return features
 
     def decode(self, features, training=True):
         """Get generated audio by decoding than processing."""
+        print(f"debug: encode: before decoder: features.shape={features.shape}")
         features.update(self.decoder(features, training=training))
+        print(f"debug: encode: after decoder: features.shape={features.shape}")
         return self.processor_group(features)
 
     def get_audio_from_outputs(self, outputs):
