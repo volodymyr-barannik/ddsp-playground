@@ -52,6 +52,8 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
 
     # Run an RNN over the latents.
     x = tf.concat(inputs, axis=-1)
+    print(f"type = {type(x)}")
+    print(f"shape after concat = {x.shape}")
     x = self.rnn(x)
     x = tf.concat(inputs + [x], axis=-1)
 
