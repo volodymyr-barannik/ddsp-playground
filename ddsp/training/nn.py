@@ -832,9 +832,9 @@ class ResNet(tfkl.Layer):
 class Fc(tf.keras.Sequential):
   """Makes a Dense -> LayerNorm -> Leaky ReLU layer."""
 
-  def __init__(self, ch=128, nonlinearity='leaky_relu', sparse_layers=False, **kwargs):
+  def __init__(self, ch=128, nonlinearity='leaky_relu', density=1, **kwargs):
     layers = [
-        tfkl.Dense(ch) if sparse_layers else sparse(units=ch, density=0.3, activation=None),
+        tfkl.Dense(ch) if density == 1 else sparse(units=ch, density=density, activation=None),
         tfkl.LayerNormalization(),
         tfkl.Activation(get_nonlinearity(nonlinearity)),
     ]
@@ -845,8 +845,8 @@ class Fc(tf.keras.Sequential):
 class FcStack(tf.keras.Sequential):
   """Stack Dense -> LayerNorm -> Leaky ReLU layers."""
 
-  def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', sparse_layers=False, **kwargs):
-    layers = [Fc(ch, nonlinearity=nonlinearity, sparse_layers=sparse_layers) for i in range(layers)]
+  def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', density=1, **kwargs):
+    layers = [Fc(ch, nonlinearity=nonlinearity, density=density) for i in range(layers)]
     super().__init__(layers, **kwargs)
 
 
