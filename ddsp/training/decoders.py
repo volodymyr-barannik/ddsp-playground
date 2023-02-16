@@ -37,14 +37,13 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
                  output_splits=(('amps', 1), ('harmonic_distribution', 40)),
                  density=1,
                  **kwargs):
-        super().__init__(
-            input_keys=input_keys, output_splits=output_splits, **kwargs)
-        stack = lambda: nn.FcStack(ch, layers_per_stack, density=density)
+        super().__init__(input_keys=input_keys, output_splits=output_splits, **kwargs)
+        get_stack = lambda: nn.FcStack(ch, layers_per_stack, density=density)
 
         # Layers.
-        self.input_stacks = [stack() for k in self.input_keys]
-        self.rnn = nn.Rnn(rnn_channels, rnn_type)
-        self.out_stack = stack()
+        self.input_stacks = [get_stack() for k in self.input_keys]
+        self.rnn = nn.Rnn(dims=rnn_channels, rnn_type=rnn_type)
+        self.out_stack = get_stack()
 
     def compute_output(self, *inputs):
         # Initial processing.

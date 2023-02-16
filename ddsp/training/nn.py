@@ -861,9 +861,9 @@ class Fc(tf.keras.Sequential):
 
     def __init__(self, ch=128, nonlinearity='leaky_relu', density=1, **kwargs):
         layers = [
-            SqueezeLayer(axis=2),
+            #SqueezeLayer(axis=2),
             tfkl.Dense(ch) if density == 1 else sparse(units=ch, density=density, activation=None),
-            ExpandDimsLayer(axis=2),
+            #ExpandDimsLayer(axis=2),
             tfkl.LayerNormalization(),
             tfkl.Activation(get_nonlinearity(nonlinearity)),
         ]
