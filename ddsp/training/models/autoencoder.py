@@ -61,8 +61,10 @@ class Autoencoder(Model):
 
     def call(self, features, training=True):
         """Run the core of the network, get predictions and loss."""
-        print(features)
-        print(type(features))
+
+        print(f"debug: Autoencoder: call: features={features}, type(features)={type(features)}")
+        print(f"debug: Autoencoder: call: features['audio']={features['audio']}, type(features['audio'])={type(features['audio'])}")
+
         features = self.encode(features, training=training)
         features.update(self.decoder(features, training=training))
 
