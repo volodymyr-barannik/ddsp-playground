@@ -267,6 +267,10 @@ class OutputSplitsLayer(DictLayer):
 
     def call(self, *inputs, **unused_kwargs):
         """Run compute_output(), dense output layer, then split to a dictionary."""
+
+        for i, in_value in enumerate(inputs):
+            print(f"OutputSplitsLayer: inputs[{i}] = {inputs[i].shape}")
+
         output = self.compute_output(*inputs)
         return split_to_dict(self.dense_out(output), self.output_splits)
 
