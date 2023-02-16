@@ -41,18 +41,18 @@ class Autoencoder(Model):
     def encode(self, features, training=True):
         """Get conditioning by preprocessing then encoding."""
         if self.preprocessor is not None:
-            print(f"debug: encode: before preprocessor: features.shape={features['audio'].shape}")
+            print(f"debug: encode: before preprocessor: features['audio'].shape={features['audio'].shape}")
             features.update(self.preprocessor(features, training=training))
-            print(f"debug: encode: after preprocessor: features.shape={features['audio'].shape}")
+            print(f"debug: encode: after preprocessor: features['audio'].shape={features['audio'].shape}")
         if self.encoder is not None:
             features.update(self.encoder(features))
         return features
 
     def decode(self, features, training=True):
         """Get generated audio by decoding than processing."""
-        print(f"debug: encode: before decoder: features.shape={features['audio'].shape}")
+        print(f"debug: encode: before decoder: features['audio'].shape={features['audio'].shape}")
         features.update(self.decoder(features, training=training))
-        print(f"debug: encode: after decoder: features.shape={features['audio'].shape}")
+        print(f"debug: encode: after decoder: features['audio'].shape={features['audio'].shape}")
         return self.processor_group(features)
 
     def get_audio_from_outputs(self, outputs):
@@ -67,9 +67,9 @@ class Autoencoder(Model):
 
         features = self.encode(features, training=training)
 
-        print(f"debug: encode: before decoder: features.shape={features['audio'].shape}")
+        print(f"debug: encode: before decoder: features['audio'].shape={features['audio'].shape}")
         features.update(self.decoder(features, training=training))
-        print(f"debug: encode: after decoder: features.shape={features['audio'].shape}")
+        print(f"debug: encode: after decoder: features['audio'].shape={features['audio'].shape}")
 
         # Run through processor group.
         pg_out = self.processor_group(features, return_outputs_dict=True)
