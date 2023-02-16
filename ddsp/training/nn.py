@@ -137,6 +137,8 @@ class DictLayer(tfkl.Layer):
         returns a dictionary it will be returned directly, otherwise the output
         tensors will be wrapped in a dictionary {output_key: output_tensor}.
     """
+        print(f"debug: DictLayer: received inputs: {inputs}, kwargs: {kwargs}")
+
         # Construct a list of input tensors equal in length and order to the `call`
         # input signature.
         # -- Start first with any tensor arguments.
