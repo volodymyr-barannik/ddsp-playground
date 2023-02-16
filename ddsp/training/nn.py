@@ -189,6 +189,7 @@ class DictLayer(tfkl.Layer):
                             f'Default values: {self.default_input_values}\n'
                             f'Input dictionaries: {input_dict}\n'
                             f'Input Tensors (Args, Dicts, and Defaults): {inputs}\n')
+        print(f"debug: DictLayer: inputs just before __call__: {inputs}, kwargs: {kwargs}")
         outputs = super().__call__(*inputs, **kwargs)
 
         # Return dict if call() returns it.
