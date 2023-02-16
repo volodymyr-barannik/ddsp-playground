@@ -66,7 +66,10 @@ class Autoencoder(Model):
         print(f"debug: Autoencoder: call: features['audio']={features['audio']}, type(features['audio'])={type(features['audio'])}")
 
         features = self.encode(features, training=training)
+
+        print(f"debug: encode: before decoder: features.shape={features['audio'].shape}")
         features.update(self.decoder(features, training=training))
+        print(f"debug: encode: after decoder: features.shape={features['audio'].shape}")
 
         # Run through processor group.
         pg_out = self.processor_group(features, return_outputs_dict=True)
