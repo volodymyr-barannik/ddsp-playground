@@ -871,13 +871,29 @@ class Fc(tf.keras.Sequential):
 
 
 @gin.register
-class FcStack(tf.keras.Sequential):
+class FcStack(tfkl.Layer):
     """Stack Dense -> LayerNorm -> Leaky ReLU layers."""
 
     def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', density=1, **kwargs):
-        layers = [Fc(ch, nonlinearity=nonlinearity, density=density) for i in range(layers)]
-        super().__init__(layers, **kwargs)
+        super.__init__(**kwargs)
+        self.layers = [Fc(ch, nonlinearity=nonlinearity, density=density) for i in range(layers)]
 
+    def __call__(self, x):
+        initial_xshape_0 = x.shape[0]
+        initial_xshape_1 = x.shape[1]
+
+        print(f"FcStack: reshaped x to {x.shape}.")
+
+        x = tf.reshape(x, shape=(x.shape[0] * x.shape[1], x.shape[2]))
+
+        for layer in self.layers:
+            x = layer(x)
+
+        x = tf.reshape(x, shape=(initial_xshape_0, initial_xshape_1, x.shape[1]))
+
+        print(f"FcStack: reshaped x back to {x.shape}.")
+
+        return x
 
 @gin.register
 class Rnn(tfkl.Layer):
