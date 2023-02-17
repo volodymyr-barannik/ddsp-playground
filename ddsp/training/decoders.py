@@ -38,12 +38,11 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
                  density=1,
                  **kwargs):
         super().__init__(input_keys=input_keys, output_splits=output_splits, **kwargs)
-        get_stack = lambda: nn.FcStack(ch, layers=num_layers, density=density)
 
         # Layers.
-        self.input_stacks = [get_stack() for k in self.input_keys]
+        self.input_stacks = [nn.FcStack(ch, layers=num_layers, density=density) for k in self.input_keys]
         self.rnn = nn.Rnn(dims=rnn_channels, rnn_type=rnn_type)
-        self.out_stack = get_stack()
+        self.out_stack = nn.FcStack(ch, layers=num_layers, density=density)
 
     def compute_output(self, *inputs):
         # Initial processing.
@@ -65,7 +64,12 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
         print(f"RnnFcDecoder: shape after final concat = {x.shape}")
 
         # Final processing.
-        return self.out_stack(x)
+        initial_xshape_0 = x.shape[0]
+        initial_xshape_1 = x.shape[1]
+        x = tf.reshape(x, shape=(x.shape[0] * x.shape[1], x.shape[2]))
+        x = self.out_stack(x)
+        x = tf.reshape(x, shape=(initial_xshape_0, initial_xshape_1, x.shape[2]))
+        return x
 
 
 @gin.register
