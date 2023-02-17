@@ -33,7 +33,7 @@ tfkl = tfk.layers
 # pylint: disable=redundant-keyword-arg
 
 
-class DictLayer(tfkl.Layer):
+class DictLayer(tfk.Model):
     """Wrap a Keras Layer to take dictionary inputs and outputs.
 
   Note that all return values will be converted to a dictionary, even if
@@ -96,7 +96,10 @@ class DictLayer(tfkl.Layer):
         """Dynamically computed in case input_keys is changed in subclass init."""
         return len(self.all_input_keys)
 
-    def __call__(self, *inputs, **kwargs):
+
+    def call(self, *inputs, training=None, mask=None):
+
+    #def __call__(self, *inputs, **kwargs):
         """Wrap the layer's __call__() with dictionary inputs and outputs.
 
     IMPORTANT: If no input_keys are provided to the constructor, they are

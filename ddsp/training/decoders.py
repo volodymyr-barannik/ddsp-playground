@@ -59,6 +59,7 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
         print(f"RnnFcDecoder: x type = {type(x)}")
         print(f"RnnFcDecoder: shape after concat = {x.shape}")
         x = self.rnn(x)
+        print(f"RnnFcDecoder: rnn.shape = {x.shape}")
         print(f"RnnFcDecoder: shape after rnn = {x.shape}")
         x = tf.concat(inputs + [x], axis=-1)
         print(f"RnnFcDecoder: shape after final concat = {x.shape}")
