@@ -875,7 +875,7 @@ class FcStack(tfkl.Layer):
     """Stack Dense -> LayerNorm -> Leaky ReLU layers."""
 
     def __init__(self, ch=256, layers=2, nonlinearity='leaky_relu', density=1, **kwargs):
-        super.__init__(**kwargs)
+        super().__init__(**kwargs)
         self.layers = [Fc(ch, nonlinearity=nonlinearity, density=density) for i in range(layers)]
 
     def __call__(self, x):
