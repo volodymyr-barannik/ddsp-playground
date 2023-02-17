@@ -72,7 +72,10 @@ class F0LoudnessPreprocessor(nn.DictLayer):
         self.sample_rate = sample_rate
         self.recompute_loudness = recompute_loudness
 
-    def call(self, loudness_db, f0_hz, audio=None) -> ['f0_hz', 'loudness_db', 'f0_scaled', 'ld_scaled']:
+    def call(self, inputs) -> ['f0_hz', 'loudness_db', 'f0_scaled', 'ld_scaled']:
+        loudness_db = inputs['loudness_db']
+        f0_hz = inputs['f0_hz']
+        audio = inputs['audio']
         # Compute loudness fresh (it's fast).
         if self.recompute_loudness:
             loudness_db = ddsp.spectral_ops.compute_loudness(

@@ -273,7 +273,7 @@ class OutputSplitsLayer(DictLayer):
         self.n_out = sum([v[1] for v in output_splits])
         self.dense_out = tfkl.Dense(self.n_out)
 
-    def call(self, *inputs, **unused_kwargs):
+    def call(self, inputs):
         """Run compute_output(), dense output layer, then split to a dictionary."""
 
         for i, in_value in enumerate(inputs):
