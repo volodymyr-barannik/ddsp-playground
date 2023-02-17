@@ -1030,7 +1030,7 @@ class DilatedConvStack(tfkl.Layer):
 
     def __init__(self,
                  ch=256,
-                 layers_per_stack=5,
+                 num_layers=5,
                  stacks=2,
                  kernel_size=3,
                  dilation=2,
@@ -1048,7 +1048,7 @@ class DilatedConvStack(tfkl.Layer):
 
     Args:
       ch: Number of channels in each convolution layer.
-      layers_per_stack: Convolution layers in each 'stack'. Dilation increases
+      num_layers: Convolution layers in each 'stack'. Dilation increases
         exponentially with layer depth inside a stack.
       stacks: Number of convolutions stacks.
       kernel_size: Size of convolution kernel.
@@ -1105,7 +1105,7 @@ class DilatedConvStack(tfkl.Layer):
             else:
                 # If dilation is negative, decrease dilation with depth instead of
                 # increasing.
-                dilation_rate = int((-dilation) ** (layers_per_stack - i - 1))
+                dilation_rate = int((-dilation) ** (num_layers - i - 1))
             layer = tf.keras.Sequential(name='dilated_conv')
             layer.add(tfkl.Activation(tf.nn.relu))
             layer.add(conv(ch, kernel_size, 1, dilation_rate))
@@ -1135,7 +1135,7 @@ class DilatedConvStack(tfkl.Layer):
                 self.resample_layers.append(resample_layer())
 
             # Convolve.
-            for j in range(layers_per_stack):
+            for j in range(num_layers):
                 # Convolution.
                 layer = dilated_conv(j)
                 # Normalization / scale and shift.

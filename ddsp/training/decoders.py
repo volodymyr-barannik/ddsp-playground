@@ -32,13 +32,13 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
                  rnn_channels=512,
                  rnn_type='gru',
                  ch=512,
-                 layers_per_stack=3,
+                 num_layers=3,
                  input_keys=('ld_scaled', 'f0_scaled', 'z'),
                  output_splits=(('amps', 1), ('harmonic_distribution', 40)),
                  density=1,
                  **kwargs):
         super().__init__(input_keys=input_keys, output_splits=output_splits, **kwargs)
-        get_stack = lambda: nn.FcStack(ch, layers_per_stack, density=density)
+        get_stack = lambda: nn.FcStack(ch, layers=num_layers, density=density)
 
         # Layers.
         self.input_stacks = [get_stack() for k in self.input_keys]
@@ -184,7 +184,7 @@ class DilatedConvDecoder(nn.OutputSplitsLayer):
     def __init__(self,
                  ch=256,
                  kernel_size=3,
-                 layers_per_stack=5,
+                 num_layers=5,
                  stacks=2,
                  dilation=2,
                  norm_type='layer',
@@ -216,7 +216,7 @@ class DilatedConvDecoder(nn.OutputSplitsLayer):
         self.dilated_conv_stack = nn.DilatedConvStack(
             ch=ch,
             kernel_size=kernel_size,
-            layers_per_stack=layers_per_stack,
+            num_layers=num_layers,
             stacks=stacks,
             dilation=dilation,
             norm_type=norm_type,

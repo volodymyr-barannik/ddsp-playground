@@ -44,7 +44,7 @@ RnnFcDecoder:
     rnn_channels = 256
     rnn_type = 'lstm'
     ch = 256
-    layers_per_stack = 1
+    num_layers = 1
     input_keys = ('pw_scaled', 'f0_scaled')
     output_splits = (('amps', 1),
                      ('harmonic_distribution', 60),

@@ -106,7 +106,7 @@ preprocessor = preprocessing.F0LoudnessPreprocessor(time_steps=TIME_STEPS)
 decoder = decoders.RnnFcDecoder(rnn_channels = 256,
                                 rnn_type = 'gru',
                                 ch = 256,
-                                layers_per_stack = 1,
+                                num_layers = 1,
                                 input_keys = ('ld_scaled', 'f0_scaled'),
                                 output_splits = (('amps', 1),
                                                  ('harmonic_distribution', 45),
