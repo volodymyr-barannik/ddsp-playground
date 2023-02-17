@@ -68,6 +68,7 @@ class RnnFcDecoder(nn.OutputSplitsLayer):
         initial_xshape_1 = x.shape[1]
         initial_xshape_2 = x.shape[2]
         x = tf.reshape(x, shape=(x.shape[0] * x.shape[1], x.shape[2]))
+        print(f"RnnFcDecoder: reshaped x to {x.shape}. Passing it to out_stack...")
         x = self.out_stack(x)
         x = tf.reshape(x, shape=(initial_xshape_0, initial_xshape_1, x.shape[1]))
         return x
