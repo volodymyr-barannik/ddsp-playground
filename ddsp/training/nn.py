@@ -97,7 +97,7 @@ class DictLayer(tfk.Model):
         return len(self.all_input_keys)
 
 
-    def call(self, *inputs, training=None, mask=None):
+    def call(self, *inputs):
 
     #def __call__(self, *inputs, **kwargs):
         """Wrap the layer's __call__() with dictionary inputs and outputs.
