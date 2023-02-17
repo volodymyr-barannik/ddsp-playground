@@ -264,14 +264,14 @@ class OutputSplitsLayer(DictLayer):
         split into a dictionary of tensors, each with its matching n_channels.
       **kwargs: Other tf.keras.layer kwargs, such as name.
     """
+        input_keys = input_keys or self.get_argument_names('compute_output')
+        output_keys = [v[0] for v in output_splits]
 
         super().__init__(input_keys=input_keys, output_keys=output_keys, **kwargs)
 
         self.output_splits = output_splits
         self.n_out = sum([v[1] for v in output_splits])
         self.dense_out = tfkl.Dense(self.n_out)
-        input_keys = input_keys or self.get_argument_names('compute_output')
-        output_keys = [v[0] for v in output_splits]
 
     def call(self, *inputs, **unused_kwargs):
         """Run compute_output(), dense output layer, then split to a dictionary."""
