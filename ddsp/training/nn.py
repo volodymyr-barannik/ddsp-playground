@@ -882,9 +882,9 @@ class FcStack(tfkl.Layer):
         initial_xshape_0 = x.shape[0]
         initial_xshape_1 = x.shape[1]
 
-        print(f"FcStack: reshaped x to {x.shape}.")
-
         x = tf.reshape(x, shape=(x.shape[0] * x.shape[1], x.shape[2]))
+
+        print(f"FcStack: reshaped x to {x.shape}.")
 
         for layer in self.layers:
             x = layer(x)

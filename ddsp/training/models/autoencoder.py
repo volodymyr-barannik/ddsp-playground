@@ -62,14 +62,14 @@ class Autoencoder(Model):
     def call(self, features, training=True):
         """Run the core of the network, get predictions and loss."""
 
-        print(f"debug: Autoencoder: call: features={features}, type(features)={type(features)}")
+        print(f"debug: Autoencoder: call: features={features.keys}, type(features)={type(features)}")
         print(f"debug: Autoencoder: call: features['audio']={features['audio']}, type(features['audio'])={type(features['audio'])}")
 
         features = self.encode(features, training=training)
 
-        print(f"debug: encode: before decoder: features={features}")
+        print(f"debug: encode: before decoder: features={features.keys}")
         features.update(self.decoder(features, training=training))
-        print(f"debug: encode: after decoder: features={features}")
+        print(f"debug: encode: after decoder: features={features.keys}")
 
         # Run through processor group.
         pg_out = self.processor_group(features, return_outputs_dict=True)
